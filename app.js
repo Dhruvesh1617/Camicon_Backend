@@ -17,7 +17,7 @@ app.get("/",(req,res)=>{
 /*get data
 app.get("/products",(req,res)=>{
     res.json({success:true,products})
-})
+}) 
 //get data by id
 app.get("/products/:id",(req,res)=>{
     const {id}=req.params;
