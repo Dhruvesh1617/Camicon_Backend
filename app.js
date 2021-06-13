@@ -1,10 +1,10 @@
 const express=require("express")
 const app=express();
 const cors=require("cors")
-const port=process.env.port || 3000;
+const port=process.env.PORT || 3000;
 const {dbConnection}=require("./db/dbConnection")
 const {productRouter}=require("./routes/products");
-const products=[{id:1,name:"chai",price:10},{id:2,name:"nan-cutai",price:20}] //Dummy data
+//const products=[{id:1,name:"chai",price:10},{id:2,name:"nan-cutai",price:20}] //Dummy data
 app.use(cors())
 app.use(express.json()) //parses json data
 
