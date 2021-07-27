@@ -6,7 +6,7 @@ async function dbConnection()
 {
 try
 {
-    await mongoose.connect(uri,{useNewUrlParser:true,useUnifiedTopology:true})
+    await mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex: true,useFindAndModify: false,useUnifiedTopology:true})
     console.log("Successfully connected to DB")
 }
 catch(err)

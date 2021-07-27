@@ -6,7 +6,6 @@ const ProductSchema=new Schema(
 name:{type:String,required:true},
 image:{type:String,required:true},
 price:{type:Number,required:true},
-qty:{type:Number,required:true},
 brand:{type:String,required:true},
 inStock:{type:Boolean,required:true},
 fastDelivery:{type:Boolean,required:true},
