@@ -3,7 +3,7 @@ const app=express();
 const dotenv=require("dotenv")
 dotenv.config()
 const cors=require("cors")
-const port=3000;
+const port=3001;
 const {dbConnection}=require("./db/dbConnection")
 const {productRouter}=require("./routes/products");
 const {cartRouter}=require("./routes/cartItems.js")

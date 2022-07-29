@@ -47,7 +47,7 @@ const userRegister=async (req,res)=>
                             savedUser.__v=undefined;
                         res.status(201).json(
                             {
-                            message:"User Created Successfully",
+                            message:"User Registered Successfully",
                             token,
                             user:savedUser
                         })
@@ -60,7 +60,7 @@ const userRegister=async (req,res)=>
     }
     catch(err)
     {
-        res.status(500).json({message:"Something went wrong"})
+        res.status(500).json({message:"Registration unsuccessful",err})
     }
 }
 
@@ -108,7 +108,7 @@ const userLogin=async (req,res)=>
     catch(err)
     {
         console.error(err);
-        res.status(500).json({message:"Something Went Wrong"})
+        res.status(500).json({message:"Login Unsuccessful"})
     }
 }
 
@@ -117,9 +117,13 @@ const loadUser=async (req,res)=>
 {
     try
     {
-    const user=await User.findById(req.user.id).select("-password -__v")
+    let user_id=req.user._id
+    console.log(req.user._id)
+    const user=await User.findById(user_id).select("-password -__v -created_at -updatedAt")
+    .populate({path:"wishList",model:"WishListItem",populate:{path:"products",model:"Product"}})
     .populate({path:"cart",model:"CartItem",populate:{path:"products.product",model:"Product"}})
-    .populate({path:"wishlist",model:"WishListItem",populate:{path:"products",model:"Product"}})
+   
+    console.log(user)
      return res.status(201).json({user})
     }
     catch(err)
