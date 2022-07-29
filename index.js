@@ -3,7 +3,6 @@ const app=express();
 const dotenv=require("dotenv")
 dotenv.config()
 const cors=require("cors")
-const port=3001;
 const {dbConnection}=require("./db/dbConnection")
 const {productRouter}=require("./routes/products");
 const {cartRouter}=require("./routes/cartItems.js")
@@ -34,4 +33,4 @@ app.get("/",(req,res)=>{
 })
 
 
-app.listen(process.env.PORT || port,()=>console.log("Successfully connected to Server"))
+app.listen(process.env.PORT,()=>console.log("Successfully connected to Server"))
