@@ -11,7 +11,7 @@ const jwt= require("jsonwebtoken");
     }
     try
     {
-       const decoded=jwt.verify(token,process.env.SECRET_KEY)
+       const decoded=jwt.verify(token,process.env.SECRETKEY)
        req.user=decoded;
        next()
     }
