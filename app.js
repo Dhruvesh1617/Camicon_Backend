@@ -20,7 +20,7 @@ app.use("/users",cartRouter)
 app.use("/users",userRouter)
 app.use("/users",quantityRouter)
 
-app.use((err, req, res, next) => {
+app.use((err,res) => {
 	console.error(err.stack);
 	res.status(500).json({
 		success: false,
