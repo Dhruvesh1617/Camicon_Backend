@@ -1,53 +1,36 @@
 const express=require("express")
 const app=express();
-const port=process.env.port || 3000;
+const dotenv=require("dotenv")
+dotenv.config()
+const cors=require("cors")
 const {dbConnection}=require("./db/dbConnection")
 const {productRouter}=require("./routes/products");
-const products=[{id:1,name:"chai",price:10},{id:2,name:"nan-cutai",price:20}] //Dummy data
-
+const {cartRouter}=require("./routes/cartItems.js")
+const {wishListRouter}=require("./routes/wishListItems.js")
+const {userRouter}=require("./routes/users")
+const {quantityRouter}=require("./routes/quantity")
+app.use(cors())
 app.use(express.json()) //parses json data
 
 dbConnection(); //connected to DB
 
 app.use("/products",productRouter)
+app.use("/users",wishListRouter)
+app.use("/users",cartRouter)
+app.use("/users",userRouter)
+app.use("/users",quantityRouter)
 
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).json({
+		success: false,
+		message: "An error occurred, see the errorMessage key for more details",
+		errorMessage: err.message,
+	});
+}); 
 app.get("/",(req,res)=>{
     res.send("Welcome Home")
 })
-/*get data
-app.get("/products",(req,res)=>{
-    res.json({success:true,products})
-})
-//get data by id
-app.get("/products/:id",(req,res)=>{
-    const {id}=req.params;
-    const productfind=products.find(product=>product.id==id)
-    productfind?res.status(200).json({success:true,productfind}):res.status(500).json({success:false,msg:"cannot find given id"})
-})
-//post data
-app.post("/products",(req,res)=>{
-    const {name,price}=req.body;
-    const newProduct=[...products,{id:products.length+1,name,price}]
-    res.json({success:true,newProduct})
 
-})
 
-//update any value
-app.post("/products/:id",(req,res)=>{
-    const {id}=req.params;
-    const newProduct=req.body;
-    products.forEach((product)=>{
-        if(product.id==id)
-        {
-            Object.keys(newProduct).map(key=>{
-                if(key in product)
-                {
-                    product[key]=newProduct[key]
-                }
-            })
-        }
-    })
-    res.json({success:true,products})
-})*/
-
-app.listen(port,()=>console.log("Successfully connected to Server"))
+app.listen(process.env.PORT,()=>console.log("Successfully connected to Server"))
