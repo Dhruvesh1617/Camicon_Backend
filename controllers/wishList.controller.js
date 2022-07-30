@@ -33,14 +33,14 @@ const addItemToWishList=async (req,res)=>
         {
             foundUserWishList.products.push(product) //pushing given product 
             //will save the data
-            const newWishList=await (await foundUserWishList.save()).populate("products").execPopulate("")
-            return res.status(200).json({message:"Item added to wishList",item:newWishList})
+            const wishListUpdate=await (await foundUserWishList.save()).populate("products").execPopulate();
+            return res.status(201).json({message:"Item added to wishList",item:wishListUpdate})
         }
         const addItemToWishList=new WishListItem({userId,products:[product]})
         foundUserData.wishList=addItemToWishList;
         await foundUserData.save() //storing data on user model
         const savedItem=await (await addItemToWishList.save()).populate("products").execPopulate();
-        res.status(201).json({message:"Item added to wishList",item:savedItem})
+        res.status(201).json({message:"Item added to wishList successfully",item:savedItem})
     }
     catch(err)
     {
@@ -53,11 +53,11 @@ const addItemToWishList=async (req,res)=>
 
 const removeItemFromWishList=async (req,res)=>
 {
-        const {userId,product}=req.body;
+        const {userId,productId}=req.body;
         try
         {
         const item=await  WishListItem.findOne({userId})
-        item.products=item.products.filter((productId)=>String(productId)!==String(product))
+        item.products=item.products.filter((product)=>String(product)!==String(productId))
         const newWishList=await (await item.save()).populate("products").execPopulate();
         res.status(201).json({message:"Item Removed from wishList",item:newWishList})
         }

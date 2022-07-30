@@ -5,13 +5,14 @@ const jwt= require("jsonwebtoken");
 {
     //first will take token
     const token=req.headers.authorization?.split(" ")[1] || null;
+    console.log("token",token)
     if(token===null)
     {
-        res.status(400).json({message:"SignIn/Register for better user Experience"})
+      return  res.status(400).json({message:"SignIn/Register for better user Experience"})
     }
     try
     {
-       const decoded=jwt.verify(token,process.env.SECRETKEY)
+       const decoded=jwt.verify(token,process.env.SECRET_KEY)
        req.user=decoded;
        next()
     }

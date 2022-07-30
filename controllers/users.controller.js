@@ -37,7 +37,7 @@ const userRegister=async (req,res)=>
                     }
                     newUser.password=hash;
                     const savedUser=await newUser.save() //saved user data
-                    jwt.sign({_id:savedUser._id},process.env.SECRET_KEY,{expiresIn:"12h"},(err,token)=>
+                    jwt.sign({_id:savedUser._id},process.env.SECRET_KEY,{expiresIn:"18h"},(err,token)=>
                     {
                             if(err)
                             {
@@ -94,7 +94,7 @@ const userLogin=async (req,res)=>
             {
                 return res.status(400).json({message:"Invalid credentials"})
             }
-            jwt.sign({_id:user._id},process.env.SECRET_KEY,{expiresIn:"24h"},(err,token)=>
+            jwt.sign({_id:user._id},process.env.SECRET_KEY,{expiresIn:"18h"},(err,token)=>
             {
                 if(err)
                 {
